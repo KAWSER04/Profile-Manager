@@ -2,6 +2,7 @@ package com.example.profilemanager;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.RadioGroup;
 import android.widget.Switch;
@@ -48,5 +49,29 @@ public class SelectTime extends AppCompatActivity {
         friday = (Switch) findViewById(R.id.friday);
 
         radioGroup = (RadioGroup) findViewById(R.id.radioGroupp);
+
+        button1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                timePicker(1);
+            }
+        });
+
+        button2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                timePicker(2);
+            }
+        });
+
+        save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                checkButton(v);
+
+            }
+        });
+
+    }
     }
 }
