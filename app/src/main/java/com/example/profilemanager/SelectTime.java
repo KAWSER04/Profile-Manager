@@ -97,4 +97,15 @@ public class SelectTime extends AppCompatActivity {
             days+="6,";
         }
     }
+
+    public void checkButton (View view){
+
+        int radioid = radioGroup.getCheckedRadioButtonId();
+        switch (radioid){
+            case R.id.silent:
+                break;
+            case R.id.vibrate:
+                break;
+        }
+    }
 }
