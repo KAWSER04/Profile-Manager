@@ -73,5 +73,28 @@ public class SelectTime extends AppCompatActivity {
         });
 
     }
+
+    private void swithButton() {
+        if(saturday.isChecked()){
+            days+="7,";
+        }
+        if(sunday.isChecked()){
+            days+="1,";
+        }
+        if(monday.isChecked()){
+            days+="2,";
+        }
+        if(tuesday.isChecked()){
+            days+="3,";
+        }
+        if(wednesday.isChecked()){
+            days+="4,";
+        }
+        if(thursday.isChecked()){
+            days+="5,";
+        }
+        if(friday.isChecked()){
+            days+="6,";
+        }
     }
 }
