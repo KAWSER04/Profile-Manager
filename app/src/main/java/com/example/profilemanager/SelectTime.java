@@ -1,5 +1,6 @@
 package com.example.profilemanager;
 
+import android.app.TimePickerDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -7,6 +8,7 @@ import android.widget.Button;
 import android.widget.RadioGroup;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.TimePicker;
 
 public class SelectTime extends AppCompatActivity {
     private Button button1;
@@ -107,5 +109,25 @@ public class SelectTime extends AppCompatActivity {
             case R.id.vibrate:
                 break;
         }
+    }
+
+    public void timePicker(final int n){
+
+        TimePickerDialog timePickerDialog = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
+            @Override
+            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                
+                if(n==1){
+                    textView1.setText(hourOfDay + " : " +minute);
+                    startTime=hourOfDay + ":" +minute;
+                }
+                else{
+                    textView2.setText(hourOfDay + " : " +minute);
+                    endTime=hourOfDay + ":" +minute;
+                }
+            }
+        },12,00,android.text.format.DateFormat.is24HourFormat(this));
+
+        timePickerDialog.show();
     }
 }
