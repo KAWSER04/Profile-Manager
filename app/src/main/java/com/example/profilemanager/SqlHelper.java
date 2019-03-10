@@ -1,5 +1,6 @@
 package com.example.profilemanager;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -36,6 +37,23 @@ public class SqlHelper extends SQLiteOpenHelper {
 
     }
 
+    public boolean insert(ItemsList itemsList){
+
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(col_two,itemsList.getName());
+        contentValues.put(col_three,itemsList.getStart());
+        contentValues.put(col_four,itemsList.getEnd());
+        contentValues.put(col_five,itemsList.getDays());
+        contentValues.put(col_six,itemsList.getMode());
+
+        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+
+        long insert = sqLiteDatabase.insert(table_name, null, contentValues);
+        if(insert>0){
+            return true;
+        }else
+            return false;
+    }
 
 
 
