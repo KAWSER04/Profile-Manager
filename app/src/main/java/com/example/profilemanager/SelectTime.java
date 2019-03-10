@@ -1,6 +1,7 @@
 package com.example.profilemanager;
 
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 
 public class SelectTime extends AppCompatActivity {
+
     private Button button1;
     private Button button2;
     private Button save;
@@ -70,6 +72,10 @@ public class SelectTime extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 checkButton(v);
+                swithButton();
+                ///db   here
+                Intent intent = new Intent(SelectTime.this,MainActivity.class);
+                startActivity(intent);
 
             }
         });
@@ -116,7 +122,7 @@ public class SelectTime extends AppCompatActivity {
         TimePickerDialog timePickerDialog = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                
+
                 if(n==1){
                     textView1.setText(hourOfDay + " : " +minute);
                     startTime=hourOfDay + ":" +minute;
