@@ -74,6 +74,19 @@ public class SqlHelper extends SQLiteOpenHelper {
     }
 
 
+    public int isSilent(String time){
+        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+        String sql = "select * from " + table_name + " where " + col_three + " = ? ";
+        Cursor cursor = sqLiteDatabase.rawQuery(sql, new String[]{time});
+        if(cursor.getCount()>0)
+            return 0;
+        else
+            return 1;
+
+
+    }
+
+
 
 
 }
