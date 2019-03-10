@@ -2,6 +2,7 @@ package com.example.profilemanager;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
@@ -54,6 +55,24 @@ public class SqlHelper extends SQLiteOpenHelper {
         }else
             return false;
     }
+
+
+    public Cursor show(){
+        String sql = "select * from " + table_name;
+        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+        Cursor cursor = sqLiteDatabase.rawQuery(sql, null);
+        return cursor;
+    }
+
+    public boolean delete(int id){
+        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+        int delete = sqLiteDatabase.delete(table_name, " id = ? ", new String[]{String.valueOf(id)});
+        if(delete>0)
+            return true;
+        else
+            return false;
+    }
+
 
 
 
