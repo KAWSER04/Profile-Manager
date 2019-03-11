@@ -50,6 +50,8 @@ public class SelectTime extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_time);
+        sqlHelper = new SqlHelper(getApplicationContext());
+        random = new Random();
 
         button1 = (Button) findViewById(R.id.startTimeButton);
         button2 = (Button) findViewById(R.id.endtTimeButton);
@@ -88,10 +90,10 @@ public class SelectTime extends AppCompatActivity {
             public void onClick(View v) {
                 checkButton(v);
                 swithButton();
-                ///db   here
 
                 setAlerm(startTime,0);
                 setAlerm(endTime,1);
+                StoreInDatabase();
                 Intent intent = new Intent(SelectTime.this,MainActivity.class);
                 startActivity(intent);
 
@@ -99,7 +101,6 @@ public class SelectTime extends AppCompatActivity {
         });
 
     }
-
     private void setAlerm(String st,int event) {
         Toast.makeText(getApplicationContext(),"str" + st ,Toast.LENGTH_LONG).show();
         Log.i("mytag",st);
@@ -163,7 +164,15 @@ public class SelectTime extends AppCompatActivity {
         }
     }
 
-
+    private void StoreInDatabase() {
+        String name = et_name.getText().toString().trim();
+        ItemsList itemsList = new ItemsList(1,name,startTime,endTime,days,mode,session_key_start,session_key_end);
+        if(sqlHelper.insert(itemsList)){
+            Toast.makeText(getApplicationContext(),"Insert successful",Toast.LENGTH_LONG).show();
+        }else{
+            Toast.makeText(getApplicationContext(),"Failed to Insert",Toast.LENGTH_LONG).show();
+        }
+    }
 
     private void swithButton() {
         if(saturday.isChecked()){
