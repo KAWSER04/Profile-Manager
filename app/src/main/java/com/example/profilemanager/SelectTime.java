@@ -55,7 +55,7 @@ public class SelectTime extends AppCompatActivity {
 
         button1 = (Button) findViewById(R.id.startTimeButton);
         button2 = (Button) findViewById(R.id.endtTimeButton);
-        // et_name = (EditText)findViewById(R.id.etname);
+        et_name = (EditText)findViewById(R.id.etname);
         save = (Button) findViewById(R.id.saveButton);
 
         textView1 = (TextView) findViewById(R.id.startTimeView);
