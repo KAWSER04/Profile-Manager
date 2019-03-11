@@ -79,6 +79,7 @@ public class CustomAdapter extends BaseAdapter {
                 alarmManager_end.cancel(pendingIntent_end);
 
                 Intent intent_1 = new Intent(context,MainActivity.class);
+                intent_1.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent_1);
             }
         });
