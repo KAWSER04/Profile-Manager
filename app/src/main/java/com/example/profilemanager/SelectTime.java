@@ -6,10 +6,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.TimePicker;
+
+import java.util.Random;
 
 public class SelectTime extends AppCompatActivity {
 
@@ -30,6 +33,11 @@ public class SelectTime extends AppCompatActivity {
     private String endTime;
     private String days ="";
     private int mode ;
+    SqlHelper sqlHelper;
+    public EditText et_name;
+    Random random;
+    private int session_key_start;
+    private int session_key_end;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
