@@ -11,6 +11,8 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
+import java.util.Random;
+
 public class SelectTime extends AppCompatActivity {
 
     private Button button1;
@@ -35,6 +37,8 @@ public class SelectTime extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_time);
+        sqlHelper = new SqlHelper(getApplicationContext());
+        random = new Random();
 
         button1 = (Button) findViewById(R.id.startTimeButton);
         button2 = (Button) findViewById(R.id.endtTimeButton);
