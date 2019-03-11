@@ -57,6 +57,32 @@ public class CustomAdapter extends BaseAdapter {
         tv_startTime.setText(startTime);
         tv_endTime.setText(endTime);
 
+        ibnt_delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int id = arrayList.get(position).getId_();
+                SqlHelper sqlHelper = new SqlHelper(context);
+                sqlHelper.delete(id);
+
+                Intent intent = new Intent(context,AlermReceiver.class);
+                intent.putExtra("mode",-1);
+
+                int requestcode_start = arrayList.get(position).getSession_key_start();
+                int requestcode_end = arrayList.get(position).getSession_key_end();
+
+                PendingIntent pendingIntent_start = PendingIntent.getBroadcast(context,requestcode_start,intent,0);
+                AlarmManager alarmManager_start = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
+                alarmManager_start.cancel(pendingIntent_start);
+
+                PendingIntent pendingIntent_end = PendingIntent.getBroadcast(context,requestcode_end,intent,0);
+                AlarmManager alarmManager_end = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
+                alarmManager_end.cancel(pendingIntent_end);
+
+                Intent intent_1 = new Intent(context,MainActivity.class);
+                context.startActivity(intent_1);
+            }
+        });
+
         return view;
     }
 

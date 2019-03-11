@@ -1,17 +1,24 @@
 package com.example.profilemanager;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.app.TimePickerDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import java.util.Calendar;
 import java.util.Random;
 
 public class SelectTime extends AppCompatActivity {
@@ -33,6 +40,11 @@ public class SelectTime extends AppCompatActivity {
     private String endTime;
     private String days ="";
     private int mode ;
+    SqlHelper sqlHelper;
+    public EditText et_name;
+    Random random;
+    private int session_key_start;
+    private int session_key_end;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,7 +90,9 @@ public class SelectTime extends AppCompatActivity {
             public void onClick(View v) {
                 checkButton(v);
                 swithButton();
-                ///db   here
+
+                setAlerm(startTime,0);
+                setAlerm(endTime,1);
                 StoreInDatabase();
                 Intent intent = new Intent(SelectTime.this,MainActivity.class);
                 startActivity(intent);
@@ -87,7 +101,68 @@ public class SelectTime extends AppCompatActivity {
         });
 
     }
+    private void setAlerm(String st,int event) {
+        Toast.makeText(getApplicationContext(),"str" + st ,Toast.LENGTH_LONG).show();
+        Log.i("mytag",st);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            String[] split = st.split(":");
+            int hour = Integer.parseInt(split[0]);
+            int minit = Integer.parseInt(split[1]);
 
+
+            Calendar calendar = Calendar.getInstance();
+            calendar.set(Calendar.HOUR_OF_DAY,hour);
+            calendar.set(Calendar.MINUTE,minit);
+            calendar.set(Calendar.SECOND,0);
+            String[] days_of_week = days.split(",");
+            for(int i=0;i<days_of_week.length;i++){
+                int pos = Integer.parseInt(days_of_week[i]);
+                switch (pos){
+                    case 7:
+                        calendar.set(Calendar.DAY_OF_WEEK,7);
+                        break;
+                    case 1:
+                        calendar.set(Calendar.DAY_OF_WEEK,1);
+                        break;
+                    case 2:
+                        calendar.set(Calendar.DAY_OF_WEEK,2);
+                        break;
+                    case 3:
+                        calendar.set(Calendar.DAY_OF_WEEK,3);
+                        break;
+                    case 4:
+                        calendar.set(Calendar.DAY_OF_WEEK,4);
+                        break;
+                    case 5:
+                        calendar.set(Calendar.DAY_OF_WEEK,5);
+                        break;
+                    case 6:
+                        calendar.set(Calendar.DAY_OF_WEEK,6);
+                        break;
+
+                }
+            }
+
+
+            Toast.makeText(getApplicationContext(),"Hour : " + hour + "\n" + "Min : "+ minit,Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(getApplicationContext(),AlermReceiver.class);
+
+
+            int requestcode = random.nextInt(1000);
+            PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(),requestcode,intent,0);
+
+            if(event==0){
+                session_key_start = requestcode;
+                intent.putExtra("mode",0);
+            }else {
+                session_key_end = requestcode;
+                intent.putExtra("mode",1);
+            }
+
+            AlarmManager alarmManager = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
+            alarmManager.set(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(),pendingIntent);
+        }
+    }
 
     private void StoreInDatabase() {
         String name = et_name.getText().toString().trim();
