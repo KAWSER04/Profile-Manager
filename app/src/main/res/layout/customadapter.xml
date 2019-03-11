@@ -14,24 +14,28 @@
             android:id="@+id/tv_title"
             android:text="TITLE"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/black"/>
         <TextView
             android:id="@+id/tv_start"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Start Time"/>
+            android:text="Start Time"
+            android:textColor="@android:color/black"/>
         <TextView
             android:id="@+id/tv_end"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="End Time"/>
+            android:text="End Time"
+            android:textColor="@android:color/black"/>
 
     </LinearLayout>
 
 
     <LinearLayout
+        android:layout_marginTop="15dp"
         android:layout_width="0dp"
-        android:layout_weight="0.3"
+        android:layout_weight="0.1"
         android:layout_height="match_parent">
 
         <ImageButton
