@@ -10,6 +10,9 @@ import android.widget.RadioGroup;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
+
+import java.util.Random;
 
 public class SelectTime extends AppCompatActivity {
 
@@ -35,6 +38,8 @@ public class SelectTime extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_time);
+        sqlHelper = new SqlHelper(getApplicationContext());
+        random = new Random();
 
         button1 = (Button) findViewById(R.id.startTimeButton);
         button2 = (Button) findViewById(R.id.endtTimeButton);
@@ -74,12 +79,24 @@ public class SelectTime extends AppCompatActivity {
                 checkButton(v);
                 swithButton();
                 ///db   here
+                StoreInDatabase();
                 Intent intent = new Intent(SelectTime.this,MainActivity.class);
                 startActivity(intent);
 
             }
         });
 
+    }
+
+
+    private void StoreInDatabase() {
+        String name = et_name.getText().toString().trim();
+        ItemsList itemsList = new ItemsList(1,name,startTime,endTime,days,mode,session_key_start,session_key_end);
+        if(sqlHelper.insert(itemsList)){
+            Toast.makeText(getApplicationContext(),"Insert successful",Toast.LENGTH_LONG).show();
+        }else{
+            Toast.makeText(getApplicationContext(),"Failed to Insert",Toast.LENGTH_LONG).show();
+        }
     }
 
     private void swithButton() {
